@@ -79,14 +79,6 @@ const SUBCATEGORIES = [
 
 const DEFAULT_CUSTOM_PRICE = [0, 100] as [number, number];
 
-const config = {
-  headers: {
-    "Access-Control-Allow-Origin":
-      "https://products-eyy3nk1hg-karens-projects-e16ed06e.vercel.app/api/products",
-    "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-  },
-};
-
 export default function Home() {
   const [filter, setFilter] = useState<ProductState>({
     color: ["beige", "blue", "green", "purple", "white"],
@@ -98,20 +90,29 @@ export default function Home() {
   const { data: products, refetch } = useQuery({
     queryKey: ["products"],
     queryFn: async () => {
-      const { data } = await axios.post<QueryResult<TProduct>[]>(
-        "https://products-kappa-six.vercel.app/api/products",
-        {
-          filter: {
-            sort: filter.sort,
-            color: filter.color,
-            price: filter.price.range,
-            size: filter.size,
+      try {
+        const response = await axios.post(
+          "https://products-kappa-six.vercel.app/api/products",
+          {
+            filter: {
+              sort: filter.sort,
+              color: filter.color,
+              price: filter.price.range,
+              size: filter.size,
+            },
           },
-        },
-        config
-      );
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
 
-      return data;
+        return response.data;
+      } catch (error) {
+        console.error("Error fetching products:", error);
+        throw new Error("Failed to fetch products");
+      }
     },
   });
 
