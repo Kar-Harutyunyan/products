@@ -82,7 +82,7 @@ const DEFAULT_CUSTOM_PRICE = [0, 100] as [number, number];
 const config = {
   headers: {
     "Access-Control-Allow-Origin":
-      "https://products-eyy3nk1hg-karens-projects-e16ed06e.vercel.app",
+      "https://products-eyy3nk1hg-karens-projects-e16ed06e.vercel.app/api/products",
     "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
   },
 };
