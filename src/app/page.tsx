@@ -91,7 +91,7 @@ export default function Home() {
     queryKey: ["products"],
     queryFn: async () => {
       try {
-        const response = await axios.post(
+        const { data } = await axios.post(
           "https://products-kappa-six.vercel.app/api/products",
           {
             filter: {
@@ -108,7 +108,7 @@ export default function Home() {
           }
         );
 
-        return response.data;
+        return data;
       } catch (error) {
         console.error("Error fetching products:", error);
         throw new Error("Failed to fetch products");
@@ -397,7 +397,7 @@ export default function Home() {
             {products && products.length === 0 ? (
               <EmptyState />
             ) : products ? (
-              products.map((product) => (
+              products.map((product: any) => (
                 <Product key={product.id} product={product.metadata!} />
               ))
             ) : (
