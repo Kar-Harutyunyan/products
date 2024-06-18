@@ -79,6 +79,14 @@ const SUBCATEGORIES = [
 
 const DEFAULT_CUSTOM_PRICE = [0, 100] as [number, number];
 
+const config = {
+  headers: {
+    "Access-Control-Allow-Origin":
+      "https://products-eyy3nk1hg-karens-projects-e16ed06e.vercel.app",
+    "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+  },
+};
+
 export default function Home() {
   const [filter, setFilter] = useState<ProductState>({
     color: ["beige", "blue", "green", "purple", "white"],
@@ -99,7 +107,8 @@ export default function Home() {
             price: filter.price.range,
             size: filter.size,
           },
-        }
+        },
+        config
       );
 
       return data;
